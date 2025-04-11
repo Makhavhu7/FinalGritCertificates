@@ -1,0 +1,33 @@
+
+{
+    "certificates": [
+      {
+        "glNumber": "GL-001",
+        "studentCode": "12345",
+        "firstName": "John",
+        "lastName": "Doe",
+        "status": "Passed with Distinction",
+        "certificate": "12345_John_Doe.pdf",
+        "qrCode": "qrcodes/12345_QR.png"
+      },
+      {
+        "glNumber": "GL-002",
+        "studentCode": "67890",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "status": "Passed",
+        "certificate": "67890_Jane_Smith.pdf",
+        "qrCode": "qrcodes/67890_QR.png"
+      },
+      {
+        "glNumber": "GL-003",
+        "studentCode": "24680",
+        "firstName": "Michael",
+        "lastName": "Johnson",
+        "status": "Passed with Distinction",
+        "certificate": "24680_Michael_Johnson.pdf",
+        "qrCode": "qrcodes/24680_QR.png"
+      }
+    ]
+  }
+  

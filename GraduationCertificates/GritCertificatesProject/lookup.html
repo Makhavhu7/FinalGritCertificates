@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Lookup - CertiFinder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CertiFinder</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="lookup.html" class="active">Certificate Lookup</a></li>
+                    <li><a href="admin.html">Admin Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="lookup-hero">
+        <div class="container">
+            <h1>Certificate Lookup</h1>
+            <p>Enter your GL number below to retrieve your certificate</p>
+        </div>
+    </section>
+
+    <section class="lookup-form">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <i class="fas fa-search"></i>
+                    <h2>Find Your Certificate</h2>
+                </div>
+                <form id="lookupForm">
+                    <div class="form-group">
+                        <label for="glNumber">GL Number</label>
+                        <input type="text" id="glNumber" name="glNumber" placeholder="e.g., GL-001" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Look Up Certificate</button>
+                </form>
+                <div class="qr-option">
+                    <p>Or view your certificate QR code</p>
+                    <button id="scanQrBtn" class="btn secondary-btn"><i class="fas fa-qrcode"></i> View QR Code</button>
+                </div>
+            </div>
+            
+            <div id="certificateResult" class="certificate-result hidden">
+                <div class="result-header">
+                    <h2>Certificate Found</h2>
+                    <button id="closeResult" class="close-btn"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="certificate-details">
+                    <div class="detail-group">
+                        <span class="detail-label">Name:</span>
+                        <span id="studentName" class="detail-value">John Doe</span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Student Code:</span>
+                        <span id="studentCode" class="detail-value">12345</span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">GL Number:</span>
+                        <span id="resultGlNumber" class="detail-value">GL-001</span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Status:</span>
+                        <span id="certificateStatus" class="detail-value status-pass">Passed with Distinction</span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">QR Code:</span>
+                        <div id="qrCodeDisplay" class="qr-code-display"></div>
+                    </div>
+                </div>
+                <div class="certificate-actions">
+                    <button id="viewCertificate" class="btn primary-btn"><i class="fas fa-eye"></i> View Certificate</button>
+                    <button id="downloadCertificate" class="btn secondary-btn"><i class="fas fa-download"></i> Download</button>
+                </div>
+            </div>
+            
+            <div id="certificateNotFound" class="certificate-not-found hidden">
+                <div class="not-found-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h2>Certificate Not Found</h2>
+                <p>We couldn't find a certificate with the GL number <span id="notFoundGlNumber">GL-000</span>.</p>
+                <p>Please check the GL number and try again, or contact support for assistance.</p>
+                <button id="tryAgainBtn" class="btn primary-btn">Try Again</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="certificateViewer" class="certificate-viewer hidden">
+        <div class="viewer-content">
+            <div class="viewer-header">
+                <h2>Certificate Preview</h2>
+                <button id="closeViewer" class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="certificate-frame">
+                <div id="certificateDisplay" class="certificate-display">
+                    <!-- Certificate will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrCodeModal" class="qr-modal hidden">
+        <div class="qr-modal-content">
+            <div class="qr-modal-header">
+                <h3>Certificate QR Code</h3>
+                <button id="closeQrModal" class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="qrModalDisplay" class="qr-modal-display"></div>
+            <p id="qrModalMessage" class="qr-modal-message"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>CertiFinder</h2>
+                    <p>Your trusted certificate verification platform</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="lookup.html">Certificate Lookup</a></li>
+                        <li><a href="admin.html">Admin Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@certifinder.edu</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 CertiFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="lookup.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/04f46c6a/qrcode.min.js"></script>
+</body>
+</html>

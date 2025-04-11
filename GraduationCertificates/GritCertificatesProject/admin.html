@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - CertiFinder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CertiFinder</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="lookup.html">Certificate Lookup</a></li>
+                    <li><a href="admin.html" class="active">Admin Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="admin-login">
+        <div class="container">
+            <div class="login-container" id="loginContainer">
+                <div class="form-header">
+                    <i class="fas fa-user-shield"></i>
+                    <h2>Admin Login</h2>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Login</button>
+                </form>
+                <p class="login-hint">Use "admin" for both username and password to demo the system</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="adminDashboard" class="admin-dashboard hidden">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <button id="logoutBtn" class="btn secondary-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-certificate"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Certificates</h3>
+                        <p id="totalCertificates">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Distinction</h3>
+                        <p id="distinctionCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Pass</h3>
+                        <p id="passCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Last Updated</h3>
+                        <p id="lastUpdated">Never</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-actions">
+                <div class="upload-section">
+                    <h2>Upload Certificates</h2>
+                    <div class="upload-form">
+                        <form id="uploadForm">
+                            <div class="file-upload">
+                                <label for="certificateUpload" class="file-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span id="uploadText">Choose PDFs or drag & drop</span>
+                                </label>
+                                <input type="file" id="certificateUpload" accept=".pdf" multiple hidden>
+                            </div>
+                            <div class="selected-files" id="selectedFiles">
+                                <!-- Selected files will appear here -->
+                            </div>
+                            <button type="submit" id="uploadBtn" class="btn primary-btn" disabled>Process Certificates</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="manual-entry-section">
+                    <h2>Manual Certificate Entry</h2>
+                    <form id="manualEntryForm">
+                        <div class="form-group">
+                            <label for="studentCode">Student Code</label>
+                            <input type="text" id="studentCode" name="studentCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" required>
+                                <option value="Passed with Distinction">Passed with Distinction</option>
+                                <option value="Passed">Passed</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Add Certificate</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="certificate-management">
+                <div class="management-header">
+                    <h2>Certificate Management</h2>
+                    <div class="management-actions">
+                        <div class="search-container">
+                            <input type="text" id="searchCertificates" placeholder="Search certificates...">
+                            <button type="button" class="btn search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <button id="generateQRBtn" class="btn secondary-btn"><i class="fas fa-qrcode"></i> Generate All QR Codes</button>
+                        <button id="exportDataBtn" class="btn secondary-btn"><i class="fas fa-download"></i> Export Data</button>
+                    </div>
+                </div>
+                
+                <div class="certificates-table-container">
+                    <table class="certificates-table">
+                        <thead>
+                            <tr>
+                                <th>GL Number</th>
+                                <th>Student Code</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Certificate</th>
+                                <th>QR Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certificatesTableBody">
+                            <!-- Certificate entries will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="qrCodeModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>QR Code for <span id="qrCodeStudentName">Student Name</span></h2>
+                <button class="close-modal-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="qr-code-container" id="qrCodeDisplay">
+                    <!-- QR code will be displayed here -->
+                </div>
+                <div class="qr-code-info">
+                    <p>GL Number: <span id="qrGlNumber">GL-001</span></p>
+                    <p>Link: <span id="qrCodeLink">https://certifinder.edu/lookup?gl=GL-001</span></p>
+                </div>
+                <div class="qr-code-actions">
+                    <button id="downloadQrBtn" class="btn primary-btn"><i class="fas fa-download"></i> Download QR Code</button>
+                    <button id="printQrBtn" class="btn secondary-btn"><i class="fas fa-print"></i> Print QR Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>CertiFinder</h2>
+                    <p>Your trusted certificate verification platform</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="lookup.html">Certificate Lookup</a></li>
+                        <li><a href="admin.html">Admin Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@certifinder.edu</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CertiFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

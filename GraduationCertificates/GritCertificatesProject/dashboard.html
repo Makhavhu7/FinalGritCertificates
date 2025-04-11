@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CertiFinder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1>CertScan</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="lookup.html"><i class="fas fa-search"></i> Certificate Lookup</a></li>
+                    <li class="user-menu">
+                        <span id="usernameDisplay"></span>
+                        <button id="logoutBtn" class="btn secondary">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome back, <span id="dashboardUsername"></span>. Manage certificates and generate QR codes.</p>
+        </div>
+        
+        <div class="dashboard-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="upload">
+                    <i class="fas fa-upload"></i> Upload
+                </button>
+                <button class="tab-button" data-tab="manage">
+                    <i class="fas fa-list"></i> Manage
+                </button>
+            </div>
+            
+            <div class="tab-content active" id="uploadTab">
+                <div class="upload-card">
+                    <h2>Upload Certificates</h2>
+                    <div class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag and drop certificate files or click to browse.</p>
+                        <p class="small">File name format: student_code_first_name_last_name.pdf</p>
+                        <input type="file" id="certificateUpload" accept=".pdf" multiple>
+                        <label for="certificateUpload" class="btn secondary">
+                            Browse Files
+                        </label>
+                    </div>
+                    
+                    <div id="selectedFiles" class="selected-files hidden">
+                        <h3>Selected Files (<span id="fileCount">0</span>)</h3>
+                        <div id="fileList" class="file-list"></div>
+                        <button id="processBtn" class="btn primary" disabled>
+                            Process All Files
+                        </button>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3>Instructions</h3>
+                        <ul>
+                            <li>Upload certificate PDF files named as: student_code_first_name_last_name.pdf</li>
+                            <li>The system will automatically extract student details from filenames</li>
+                            <li>Each certificate will be assigned a unique GL number</li>
+                            <li>QR codes will be generated automatically linking to the certificate lookup page</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="manageTab">
+                <div class="manage-header">
+                    <h2>Certificates (<span id="certificateCount">0</span>)</h2>
+                    <div class="manage-actions">
+                        <div class="search-box">
+                            <input type="text" id="certificateSearch" placeholder="Search certificates...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select id="statusFilter">
+                            <option value="all">All Statuses</option>
+                            <option value="Passed">Passed</option>
+                            <option value="Passed with Distinction">Passed with Distinction</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="certificate-table-container">
+                    <table class="certificate-table">
+                        <thead>
+                            <tr>
+                                <th>GL Number</th>
+                                <th>Student Code</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Issue Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certificateTableBody">
+                            <!-- Certificates will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>QR Code for <span id="modalStudentName"></span></h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="qrCodeContainer"></div>
+                <div class="qr-info">
+                    <p>GL Number: <span id="modalGLNumber"></span></p>
+                    <p>Link: <span id="modalLink"></span></p>
+                </div>
+                <div class="modal-actions">
+                    <button id="downloadQR" class="btn secondary">
+                        <i class="fas fa-download"></i> Download QR Code
+                    </button>
+                    <button id="printQR" class="btn secondary">
+                        <i class="fas fa-print"></i> Print QR Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>CertScan</h2>
+                    <p>Your trusted certificate verification platform</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="lookup.html">Certificate Lookup</a></li>
+                        <li><a href="login.html">Admin Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> CertScan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="scripts/database.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
